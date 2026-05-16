@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createJob } from "@/services/jobService";
 import { CATEGORIES } from "@/lib/constants";
@@ -22,8 +22,17 @@ export default function NewJobPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isChecking, setIsChecking] = useState(true);
 
   const PREDEFINED_CATEGORIES = [...CATEGORIES, "Other"];
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      router.push("/login");
+    } else {
+      setIsChecking(false);
+    }
+  }, [router]);
 
   // handles all of our standard text input changes
   const handleChange = (e) => {
@@ -87,6 +96,8 @@ export default function NewJobPage() {
       setLoading(false);
     }
   };
+
+  if (isChecking) return null;
 
   return (
     <div className="w-full max-w-3xl mx-auto p-6">

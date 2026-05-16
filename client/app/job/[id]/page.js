@@ -56,6 +56,11 @@ export default function JobDetailsPage() {
 
   // ensures user doesn't accidentally delete a job without confirming first
   const handleDelete = async () => {
+    if (!localStorage.getItem("token")) {
+      router.push("/login");
+      return;
+    }
+
     if (!window.confirm("Are you sure you want to delete this job request?")) return;
     
     try {
