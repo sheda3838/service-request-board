@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getJobs } from "@/services/jobService";
+import JobCard from "@/components/JobCard";
 
 export default function Home() {
   const [jobs, setJobs] = useState([]);
@@ -51,30 +52,7 @@ export default function Home() {
       ) : (
         <div className="grid gap-4">
           {jobs.map((job) => (
-            <div
-              key={job._id}
-              className="border rounded-lg p-4 shadow-sm hover:shadow-md transition"
-            >
-              <h2 className="text-lg font-semibold">{job.title}</h2>
-
-              <p className="text-gray-600 mt-1">{job.description}</p>
-
-              <div className="flex gap-4 mt-3 text-sm text-gray-500">
-                <span>{job.location || "N/A"}</span>
-                <span>{job.category || "Uncategorized"}</span>
-                <span
-                  className={`font-medium ${
-                    job.status === "Open"
-                      ? "text-green-600"
-                      : job.status === "In Progress"
-                        ? "text-yellow-600"
-                        : "text-red-600"
-                  }`}
-                >
-                  {job.status}
-                </span>
-              </div>
-            </div>
+            <JobCard key={job._id} job={job} />
           ))}
         </div>
       )}
