@@ -14,6 +14,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [toastMessage, setToastMessage] = useState("");
 
+  const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
@@ -24,6 +25,7 @@ export default function Home() {
       setError("");
 
       const params = {};
+      if (searchQuery) params.search = searchQuery;
       if (categoryFilter) params.category = categoryFilter;
       if (statusFilter) params.status = statusFilter;
 
@@ -46,8 +48,11 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetchJobs();
-  }, [categoryFilter, statusFilter]);
+    const timer = setTimeout(() => {
+      fetchJobs();
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [searchQuery, categoryFilter, statusFilter]);
 
   const handleStatusChange = async (jobId, newStatus) => {
     try {
@@ -88,7 +93,19 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 mb-8 p-4 bg-slate-50 border border-slate-200 rounded-xl shadow-sm">
-        <div className="w-full sm:w-1/2 relative">
+        <div className="w-full sm:w-1/3 relative">
+          <label htmlFor="searchQuery" className="sr-only">Search</label>
+          <input
+            type="text"
+            id="searchQuery"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search jobs..."
+            className="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg text-sm outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition shadow-sm text-slate-700 font-medium placeholder-slate-400"
+          />
+        </div>
+
+        <div className="w-full sm:w-1/3 relative">
           <label htmlFor="categoryFilter" className="sr-only">Filter by Category</label>
           <select
             id="categoryFilter"
@@ -109,7 +126,7 @@ export default function Home() {
           </select>
         </div>
 
-        <div className="w-full sm:w-1/2 relative">
+        <div className="w-full sm:w-1/3 relative">
           <label htmlFor="statusFilter" className="sr-only">Filter by Status</label>
           <select
             id="statusFilter"
@@ -162,18 +179,18 @@ export default function Home() {
             </svg>
           </div>
           <h3 className="text-slate-900 text-lg font-bold mb-2 tracking-tight">
-            {(categoryFilter || statusFilter) 
+            {(searchQuery || categoryFilter || statusFilter) 
               ? "No matching requests found" 
               : "No service requests yet"}
           </h3>
           <p className="text-slate-500 max-w-sm mx-auto mb-6">
-            {(categoryFilter || statusFilter)
+            {(searchQuery || categoryFilter || statusFilter)
               ? "Try adjusting your filters or clear them to see all available jobs in the system."
               : "Get started by creating a new service request. It takes just a minute!"}
           </p>
-          {(categoryFilter || statusFilter) ? (
+          {(searchQuery || categoryFilter || statusFilter) ? (
             <button 
-              onClick={() => { setCategoryFilter(""); setStatusFilter(""); }}
+              onClick={() => { setSearchQuery(""); setCategoryFilter(""); setStatusFilter(""); }}
               className="text-sm font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg px-5 py-2.5 hover:bg-slate-50 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-1 shadow-sm"
             >
               Clear all filters

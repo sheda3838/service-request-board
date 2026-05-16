@@ -26,6 +26,16 @@ const getJobs = async (req, res, next) => {
       filter.status = req.query.status;
     }
 
+    //keyword search filter
+    if (req.query.search && req.query.search.trim()) {
+      const keywords = req.query.search.trim().split(/\s+/);
+      const searchConditions = keywords.flatMap((kw) => {
+        const regex = new RegExp(kw, "i");
+        return [{ title: { $regex: regex } }, { description: { $regex: regex } }];
+      });
+      filter.$or = searchConditions;
+    }
+
     const jobs = await Job.find(filter).sort({ createdAt: -1 });
 
     res.status(200).json(jobs);
