@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getJobs } from "@/services/jobService";
+import { getJobs, updateJobStatus } from "@/services/jobService";
 import JobCard from "@/components/JobCard";
 
 export default function Home() {
@@ -26,6 +26,19 @@ export default function Home() {
   useEffect(() => {
     fetchJobs();
   }, []);
+
+  const handleStatusChange = async (jobId, newStatus) => {
+    try {
+      await updateJobStatus(jobId, newStatus);
+      setJobs((prevJobs) =>
+        prevJobs.map((job) =>
+          job._id === jobId ? { ...job, status: newStatus } : job
+        )
+      );
+    } catch (err) {
+      alert(err?.response?.data?.message || "Failed to update status.");
+    }
+  };
 
   if (loading) {
     return (
@@ -52,7 +65,11 @@ export default function Home() {
       ) : (
         <div className="grid gap-4">
           {jobs.map((job) => (
-            <JobCard key={job._id} job={job} />
+            <JobCard 
+              key={job._id} 
+              job={job} 
+              onStatusChange={handleStatusChange} 
+            />
           ))}
         </div>
       )}

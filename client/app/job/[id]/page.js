@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getJobById, updateJobStatus, deleteJob } from "@/services/jobService";
 import Link from "next/link";
+import StatusBadge from "@/components/StatusBadge";
 
 export default function JobDetailsPage() {
   const { id } = useParams();
@@ -109,17 +110,11 @@ export default function JobDetailsPage() {
           <div className="flex items-center gap-3 shrink-0">
              <div className="flex items-center gap-2">
                 <label htmlFor="status" className="text-sm font-medium text-gray-700">Status:</label>
-                <select
-                  id="status"
-                  value={job.status}
-                  onChange={handleStatusChange}
-                  disabled={updating}
-                  className="px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-900 focus:ring-2 focus:ring-gray-900 focus:border-gray-900 outline-none disabled:opacity-50 transition cursor-pointer"
-                >
-                  <option value="Open">Open</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Closed">Closed</option>
-                </select>
+                <StatusBadge 
+                  status={job.status} 
+                  onChange={handleStatusChange} 
+                  disabled={updating} 
+                />
              </div>
           </div>
         </div>
