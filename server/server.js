@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 import connectDB from "./config/db.js";
 import jobRoutes from "./routes/jobRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import errorHandler from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -28,8 +29,9 @@ app.get("/", (req, res) => {
   });
 });
 
-// Job routes
+// Routes
 app.use("/api/jobs", jobRoutes);
+app.use("/api/auth", authRoutes);
 
 // 404 handler
 app.use((req, res) => {
