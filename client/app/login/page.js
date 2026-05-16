@@ -29,6 +29,7 @@ export default function LoginPage() {
       const res = await loginUser(formData);
       
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
       sessionStorage.setItem("successMessage", "Logged in successfully!");
       
       router.push("/");

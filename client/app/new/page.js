@@ -31,6 +31,19 @@ export default function NewJobPage() {
       router.push("/login");
     } else {
       setIsChecking(false);
+      try {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          setFormData((prev) => ({
+            ...prev,
+            contactName: user.name || prev.contactName,
+            contactEmail: user.email || prev.contactEmail,
+          }));
+        }
+      } catch (err) {
+        console.error("Failed to parse user data", err);
+      }
     }
   }, [router]);
 

@@ -33,6 +33,7 @@ export default function RegisterPage() {
       const res = await registerUser(formData);
       
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
       sessionStorage.setItem("successMessage", "Account created successfully!");
       
       router.push("/");
