@@ -1,6 +1,6 @@
 import Job from "../models/Job.js";
 
-// Create a new job request using POST /api/jobs
+// create a new job request using POST /api/jobs
 const createJob = async (req, res, next) => {
   try {
     const job = await Job.create(req.body);
@@ -11,22 +11,22 @@ const createJob = async (req, res, next) => {
   }
 };
 
-// Get all job requests using GET /api/jobs
+// get all job requests using GET /api/jobs
 const getJobs = async (req, res, next) => {
   try {
     const filter = {};
 
-    //category filter
+    // category filter
     if (req.query.category) {
       filter.category = req.query.category;
     }
 
-    //status filter
+    // status filter
     if (req.query.status) {
       filter.status = req.query.status;
     }
 
-    //keyword search filter
+    // keyword search filter
     if (req.query.search && req.query.search.trim()) {
       const keywords = req.query.search.trim().split(/\s+/);
       const searchConditions = keywords.flatMap((kw) => {
@@ -44,12 +44,12 @@ const getJobs = async (req, res, next) => {
   }
 };
 
-// Get single job request using GET /api/jobs/:id
+// get single job request using GET /api/jobs/:id
 const getJobById = async (req, res, next) => {
   try {
     const job = await Job.findById(req.params.id);
 
-    //return 404 if job does not exist
+    // return 404 if job does not exist
     if (!job) {
       return res.status(404).json({
         message: "Job not found",
@@ -62,7 +62,7 @@ const getJobById = async (req, res, next) => {
   }
 };
 
-// Update job status only using PATCH /api/jobs/:id
+// update job status only using PATCH /api/jobs/:id
 const updateJobStatus = async (req, res, next) => {
   try {
     const { status } = req.body;
@@ -75,7 +75,7 @@ const updateJobStatus = async (req, res, next) => {
       });
     }
 
-    //only allow status updates
+    // only allow status updates
     const updatedJob = await Job.findByIdAndUpdate(
       req.params.id,
       { status },
@@ -85,7 +85,7 @@ const updateJobStatus = async (req, res, next) => {
       },
     );
 
-    //return 404 if job does not exist
+    // return 404 if job does not exist
     if (!updatedJob) {
       return res.status(404).json({
         message: "Job not found",
@@ -98,12 +98,12 @@ const updateJobStatus = async (req, res, next) => {
   }
 };
 
-//delete a job request using DELETE /api/jobs/:id
+// delete a job request using DELETE /api/jobs/:id
 const deleteJob = async (req, res, next) => {
   try {
     const deletedJob = await Job.findByIdAndDelete(req.params.id);
 
-    //return 404 if job does not exist
+    // return 404 if job does not exist
     if (!deletedJob) {
       return res.status(404).json({
         message: "Job not foundd",

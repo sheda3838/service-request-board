@@ -1,14 +1,14 @@
 const errorHandler = (err, req, res, next) => {
   console.error(err);
 
-  //invalid MongoDB ObjectId
+  // invalid MongoDB ObjectId
   if (err.name === "CastError") {
     return res.status(404).json({
       message: "Resource not found",
     });
   }
 
-  //mongoose validation errors
+  // mongoose validation errors
   if (err.name === "ValidationError") {
     return res.status(400).json({
       message: Object.values(err.errors)

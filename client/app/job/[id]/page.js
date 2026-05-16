@@ -7,7 +7,7 @@ import Link from "next/link";
 import StatusBadge from "@/components/StatusBadge";
 import Toast from "@/components/Toast";
 
-//this page displays the full details of a specific job request and allows you to update its status or delete it
+// this page displays the full details of a specific job request and allows you to update its status or delete it
 export default function JobDetailsPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function JobDetailsPage() {
     fetchJob();
   }, [id]);
 
-  //fetches the actual job data from our express backend
+  // fetches the actual job data from our express backend
   const fetchJob = async () => {
     try {
       setLoading(true);
@@ -39,7 +39,7 @@ export default function JobDetailsPage() {
     }
   };
 
-  //we handle the status change directly here so it instantly updates the ui before hittting the server
+  // we handle the status change directly here so it instantly updates the ui before hittting the server
   const handleStatusChange = async (e) => {
     const newStatus = e.target.value;
     try {
@@ -54,7 +54,7 @@ export default function JobDetailsPage() {
     }
   };
 
-  //ensures user doesn't accidentally delete a job without confirming first
+  // ensures user doesn't accidentally delete a job without confirming first
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this job request?")) return;
     
@@ -62,7 +62,7 @@ export default function JobDetailsPage() {
       setDeleting(true);
       await deleteJob(id);
       
-      //used session storage to safely pass the success toast over to the home page after redirecting
+      // used session storage to safely pass the success toast over to the home page after redirecting
       sessionStorage.setItem("successMessage", "Job request deleted successfully!");
       router.push("/");
     } catch (err) {
@@ -119,7 +119,7 @@ export default function JobDetailsPage() {
       </div>
 
       <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col min-h-0 flex-1">
-        {/*header section*/}
+        {/* header section */}
         <div className="p-5 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-6 bg-slate-50/50 shrink-0">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-1 sm:mb-2 tracking-tight">{job.title}</h1>
@@ -144,7 +144,7 @@ export default function JobDetailsPage() {
           </div>
         </div>
 
-        {/*details section*/}
+        {/* details section */}
         <div className="p-5 sm:p-6 space-y-8 overflow-y-auto flex-1">
           <div>
             <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">Description</h2>
@@ -189,7 +189,7 @@ export default function JobDetailsPage() {
           </div>
         </div>
         
-        {/*footer section*/}
+        {/* footer section */}
         <div className="px-5 sm:px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end shrink-0">
           <button
             onClick={handleDelete}

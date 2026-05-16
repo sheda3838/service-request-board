@@ -1,11 +1,11 @@
 import StatusBadge from "./StatusBadge";
 import Link from "next/link";
 
-//represents a single job request card displayed on the home page grid
+// represents a single job request card displayed on the home page grid
 export default function JobCard({ job, onStatusChange }) {
   const { _id, title, description, location, category, status } = job;
 
-  //gives a similar bg for card to match with status
+  // gives a similar bg for card to match with status
   const getCardBg = (status) => {
     switch (status) {
       case "Open":
@@ -21,7 +21,7 @@ export default function JobCard({ job, onStatusChange }) {
 
   return (
     <div className={`group relative flex flex-col h-full border rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01] transition-all duration-300 ease-out focus-within:ring-2 focus-within:ring-slate-400 focus-within:ring-offset-2 ${getCardBg(status)}`}>
-      {/*using an absolute inset link to cover the entire card so its clickable without breaking nested interactive elements*/}
+      {/* using an absolute inset link to cover the entire card so its clickable without breaking nested interactive elements */}
       <Link 
         href={`/job/${_id}`} 
         className="absolute inset-0 z-0 rounded-2xl focus:outline-none"

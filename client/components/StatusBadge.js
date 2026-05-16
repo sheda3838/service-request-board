@@ -1,8 +1,8 @@
 import { STATUSES } from "@/lib/constants";
 
-//status badges
+// status badges
 export default function StatusBadge({ status, onChange, disabled }) {
-  //tailwind utility classes depending on status
+  // tailwind utility classes depending on status
   const getStatusStyle = (status) => {
     switch (status) {
       case "Open":
@@ -18,7 +18,7 @@ export default function StatusBadge({ status, onChange, disabled }) {
 
   const isInteractive = !!onChange;
 
-  //if an onchange handler is passed we render a fully styled select dropdown instead of just a span
+  // if an onchange handler is passed we render a fully styled select dropdown instead of just a span
   if (isInteractive) {
     return (
       <select

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { CATEGORIES, STATUSES } from "@/lib/constants";
 import Toast from "@/components/Toast";
 
-//dashboard to view all job requests
+// dashboard to view all job requests
 export default function Home() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ export default function Home() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
-  //handles fetching jobs from our backend api and supports our query filters
+  // handles fetching jobs from our backend api and supports our query filters
   const fetchJobs = async () => {
     try {
       setLoading(true);
@@ -38,7 +38,7 @@ export default function Home() {
     }
   };
 
-  //we use this effect to grab any success messages that were passed through session storage from other pages (like after creating a job)
+  // we use this effect to grab any success messages that were passed through session storage from other pages (like after creating a job)
   useEffect(() => {
     const msg = sessionStorage.getItem("successMessage");
     if (msg) {
@@ -60,7 +60,7 @@ export default function Home() {
       
       setToastMessage("Status updated successfully!");
 
-      //if user changed any status by applying filters
+      // if user changed any status by applying filters
       if (statusFilter && statusFilter !== newStatus) {
         setJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
       } else {

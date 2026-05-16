@@ -6,7 +6,7 @@ import { createJob } from "@/services/jobService";
 import { CATEGORIES } from "@/lib/constants";
 import Link from "next/link";
 
-//handles the creation of new job requests
+// handles the creation of new job requests
 export default function NewJobPage() {
   const router = useRouter();
 
@@ -25,13 +25,13 @@ export default function NewJobPage() {
 
   const PREDEFINED_CATEGORIES = [...CATEGORIES, "Other"];
 
-  //handles all of our standard text input changes
+  // handles all of our standard text input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  //basic client side validation before bothering the server
+  // basic client side validation before bothering the server
   const validate = () => {
     if (!formData.title.trim()) return "Title is required.";
     if (!formData.description.trim()) return "Description is required.";
@@ -59,7 +59,7 @@ export default function NewJobPage() {
       return;
     }
 
-    //if user chose other we need to get a custom categroy they are looking for
+    // if user chose other we need to get a custom categroy they are looking for
     const finalCategory =
       formData.category === "Other" ? customCategory.trim() : formData.category;
 
@@ -72,7 +72,7 @@ export default function NewJobPage() {
       setLoading(true);
       await createJob(jobPayload);
       
-      //sends a success message
+      // sends a success message
       sessionStorage.setItem(
         "successMessage",
         "Job request created successfully!",
@@ -142,7 +142,7 @@ export default function NewJobPage() {
               />
             </div>
 
-            {/*description*/}
+            {/* description */}
             <div className="md:col-span-2">
               <label
                 htmlFor="description"
@@ -161,7 +161,7 @@ export default function NewJobPage() {
               ></textarea>
             </div>
 
-            {/*category*/}
+            {/* category */}
             <div>
               <label
                 htmlFor="category"
@@ -192,7 +192,7 @@ export default function NewJobPage() {
               </select>
             </div>
 
-            {/*custom Category*/}
+            {/* custom category */}
             {formData.category === "Other" && (
               <div>
                 <label
@@ -212,7 +212,7 @@ export default function NewJobPage() {
               </div>
             )}
 
-            {/*location*/}
+            {/* location */}
             <div
               className={
                 formData.category === "Other"
@@ -237,7 +237,7 @@ export default function NewJobPage() {
               />
             </div>
 
-            {/*contact Name*/}
+            {/* contact name */}
             <div>
               <label
                 htmlFor="contactName"
@@ -256,7 +256,7 @@ export default function NewJobPage() {
               />
             </div>
 
-            {/*contact email*/}
+            {/* contact email */}
             <div>
               <label
                 htmlFor="contactEmail"
