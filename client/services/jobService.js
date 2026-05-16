@@ -1,6 +1,6 @@
 import API from "@/lib/api";
 
-export const getJobs = () => API.get("/jobs");
+export const getJobs = (params = {}) => API.get("/jobs", { params });
 
 export const getJobById = (id) =>
   API.get(`/jobs/${id}`);

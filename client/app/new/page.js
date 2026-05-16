@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createJob } from "@/services/jobService";
+import { CATEGORIES } from "@/lib/constants";
 import Link from "next/link";
 
 export default function NewJobPage() {
@@ -21,14 +22,7 @@ export default function NewJobPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const PREDEFINED_CATEGORIES = [
-    "Plumbing",
-    "Electrical",
-    "Painting",
-    "Joinery",
-    "Cleaning",
-    "Other",
-  ];
+  const PREDEFINED_CATEGORIES = [...CATEGORIES, "Other"];
 
   const handleChange = (e) => {
     const { name, value } = e.target;

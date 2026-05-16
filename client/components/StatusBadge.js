@@ -1,3 +1,5 @@
+import { STATUSES } from "@/lib/constants";
+
 export default function StatusBadge({ status, onChange, disabled }) {
   const getStatusColor = (status) => {
     switch (status) {
@@ -31,9 +33,11 @@ export default function StatusBadge({ status, onChange, disabled }) {
           backgroundSize: "1em",
         }}
       >
-        <option value="Open">Open</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Closed">Closed</option>
+        {STATUSES.map((s) => (
+          <option key={s} value={s}>
+            {s}
+          </option>
+        ))}
       </select>
     );
   }
