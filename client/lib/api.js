@@ -4,4 +4,19 @@ const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
+API.interceptors.request.use(
+  (req) => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token) {
+        req.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return req;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default API;
